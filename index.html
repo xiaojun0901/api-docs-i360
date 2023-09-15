@@ -1474,10 +1474,10 @@ This completes the validation process for the integration. If you encounter any 
 <p>Users can find these files in the Attachments of the Appointment corresponding to the Project in I360.</p></li>
 </ul>
 <h3 id='products-information-within-drawings'>Products Information within Drawings</h3>
-<p>**The synchronization of Products data is manual</p>
+<p>The synchronization of Products data is manual</p>
 
 <ul>
-<li><p>Synchronization Timing:**</p>
+<li><p>Synchronization Timing:</p>
 
 <ul>
 <li>In the ArcSite app, whenever an Export Customer Proposal is successful, after viewing the generated PDF, clicking on &quot;Done&quot; in the top left corner will prompt a pop-up asking &quot;Did you sell this project?&quot; If the user selects &quot;Yes,&quot; ArcSite will initiate an asynchronous task to push the Products data to I360.
@@ -1635,7 +1635,7 @@ This completes the validation process for the integration. If you encounter any 
 <code>mapping_product_id</code> If product has not been bound to an I360 Product in ArcSite, it will return <strong>null</strong>.
 </aside>
 <h2 id='i360-project-sell'>I360 Project Sell</h2>
-<p><code>integration.i360.project_sell</code> Triggered when a project is sold by user in app.</p>
+<p><code>integrations.i360.project.sell</code> Triggered when a project is sold by user in app.</p>
 
 <aside class="warning">
 <span style="color: #FFF">Currently, users can only subscribe to this webhook after successfully connecting to the I360 environment. This webhook is designed to handle cases where users select "No".
