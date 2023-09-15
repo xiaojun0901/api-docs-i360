@@ -605,8 +605,8 @@ Max <code>per_page</code> is 100.
 <aside class='notice'>
 <code>owner</code> must be a valid ArcSite username belongs to same organization.
 </aside>
-
-<p>Once the Project creation is complete, if you wish to integrate with other third-party platforms to manage your projects, achieve data synchronization, and interact with them, you can use the <a href="#i360-integrations">integration module</a> of OpenAPI to access detailed information.</p>
+<h3 id='integrations'>Integrations</h3>
+<p>ArcSite supports integration with various external platforms. Once Project creation is complete, you can use the standard integration solutions we provide for different platforms to integrate your Project. After integration is completed, your Project will gain additional functionalities to support data synchronization and interactions with third-party platforms. For specific details, you can visit the <a href="#i360-integrations">integration module</a> of OpenAPI.</p>
 <h3 id='project-name-rule'>Project Name Rule</h3>
 <ol>
 <li>Project name must be unique across the same organization.</li>
@@ -1413,7 +1413,7 @@ The returned <code>url</code> will expire in 24 hours. It's not a permanent link
 </tr>
 </tbody></table>
 <h1 id='i360-integrations'>I360 Integrations</h1>
-<p>To better serve users who simultaneously use ArcSite and I360, ArcSite provides a standard integration solution for I360. After successfully integrating I360 through this solution, you can support the following extended functionalities:</p>
+<p>To better serve users who simultaneously use ArcSite and I360, ArcSite provides a standard integration solution for I360. After successfully integrating I360 through this solution, your projects can support the following extended functionalities:</p>
 
 <ul>
 <li>Bind <code>I360 Appointments</code> to ArcSite <code>Project</code></li>
@@ -1423,11 +1423,13 @@ The returned <code>url</code> will expire in 24 hours. It's not a permanent link
 </ul>
 
 <p>Depending on the integration purpose, we can divide the integration into Basic Standard Integration and Extended Integration</p>
+
+<p>In general, using the <strong>Basic Standard Integration</strong> is sufficient to access various out-of-the-box data interaction functionalities provided by ArcSite, which can meet the needs of the majority of users. However, if you desire more customized development, we also offer an <strong>Extended Integration</strong> solution. In this solution, we provide more flexible APIs and Webhooks to enable users to perform custom development as needed.</p>
 <h2 id='basic-standard-integration'>Basic Standard Integration</h2>
 <p><strong>Connecting I360 in ArcSite</strong></p>
 
 <p>For specific settings and connection methods, please refer to the Setup document:
-[I360 Integration Setup Part One - Customer Steps]<strong><a href="https://support.improveit360.com/hc/en-us/articles/4406541659543-ArcSite-improveit-360-Integration-Setup-Part-One-Customer-Steps">I360 Integration Setup Part One - Customer Steps</a></strong>.</p>
+<strong><a href="https://support.improveit360.com/hc/en-us/articles/4406541659543-ArcSite-improveit-360-Integration-Setup-Part-One-Customer-Steps">I360 Integration Setup Part One - Customer Steps</a></strong>.</p>
 
 <p><strong>Creating Project and binding Appointment to Project</strong></p>
 
