@@ -1473,7 +1473,7 @@ This concludes the validation process for the integration. If you encounter any 
 <img src="https://cdn-public.arcsiteapp.com/api_docs_images/export_proposal_png.png" alt="Untitled" />
 Whenever user Drawing information changes and these alterations sync to the cloud, ArcSite initiates an automatic data synchronization task to update the relevant I360 Appointment as necessary.</p></li>
 <li><p><strong>Synchronization Logic</strong>:
-The decision to initiate a push to I360 is based on the configuration in the <strong><code>sync_drawing_pdf</code></strong> and <strong><code>sync_proposal_pdf</code></strong> fields when associating the project. When a push request is made, a task generates the latest Drawing PDF data and exports all PDFs of the user&#39;s Proposal Templates using the latest Drawing data. These files are then automatically pushed to I360, overwriting any existing attachments.</p></li>
+When a push request is made, a task generates the latest Drawing PDF data and exports all PDFs of the user&#39;s Proposal Templates using the latest Drawing data. These files are then automatically pushed to I360, overwriting any existing attachments.</p></li>
 <li><p><strong>Verification of Synchronization Results</strong>:
 Users can locate these files in the Attachments section of the Appointment associated with the Project in I360.</p></li>
 </ul>
@@ -1541,9 +1541,7 @@ Users can find these Sales and Sales Items in the Appointment corresponding to t
 <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{
   "appointment_id": "AXh09668400GJgk",
-  "project_id": "36029621653386360",
-  "sync_drawing_pdf": true,
-  "sync_proposal_pdf": true,
+  "project_id": "36029621653386360"
 }'</span>
 </code></pre></div>
 <blockquote>
@@ -1604,16 +1602,6 @@ Users can find these Sales and Sales Items in the Appointment corresponding to t
 <td>Int</td>
 <td>(required) The ID of the existing ArcSite project.</td>
 </tr>
-<tr>
-<td>sync_drawing_pdf</td>
-<td>Boolean</td>
-<td>(optional) Specifies whether to automatically send Drawing PDF files to the I360 Appointment. Default is true.</td>
-</tr>
-<tr>
-<td>sync_proposal_pdf</td>
-<td>Boolean</td>
-<td>(optional) Specifies whether to automatically send Proposal PDF files to the I360 Appointment. Default is true.</td>
-</tr>
 </tbody></table>
 
 <aside class='notice'>
@@ -1651,14 +1639,9 @@ Users can find these Sales and Sales Items in the Appointment corresponding to t
 <img src="https://cdn-public.arcsiteapp.com/api_docs_images/sub_webhook_page.png" alt="Untitled" /></li>
 <li>The project is exported in the ArcSite app, and it is associated with an I360 appointment.
 <img src="https://cdn-public.arcsiteapp.com/api_docs_images/export_proposal_png.png" alt="Untitled" /></li>
-<li>The user does not mark the project as sold in the app when prompted.
-<img src="https://cdn-public.arcsiteapp.com/api_docs_images/mark_select_no_in_app.png" alt="Untitled" /></li>
+<li>The user choose the &quot;Yes&quot; or &quot;No&quot; in the app when prompted.
+<img src="https://cdn-public.arcsiteapp.com/api_docs_images/did_you_sell_project_png.png" alt="Untitled" /></li>
 </ul>
-
-<aside class="warning">
-<span style="color: #FFF">
-This webhook is triggered when the user selects "No" in the app. If the user selects "Yes," the webhook will not be triggered, and ArcSite will automatically push the drawing line items data to I360 using the default logic.
-</span></aside>
 <h3 id='proposal-exported-in-app-webhook-payload'>Proposal Exported in App Webhook Payload</h3>
 <table><thead>
 <tr>
