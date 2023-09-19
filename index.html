@@ -1407,7 +1407,7 @@ The returned <code>url</code> will expire in 24 hours. It's not a permanent link
 <li>Associate <code>I360 Appointments</code> with ArcSite <code>Projects</code></li>
 <li>Automatically synchronize <code>Drawing PDF data (including PDF files of Drawings and Proposal PDFs)</code> for associated Projects</li>
 <li>Proactively transmit <code>Product Lines</code> information to I360 Appointments for associated Projects, accessible via both the App and User Site</li>
-<li>Enable subscription to the <a href="#proposal-exported-in-app-associated-with-i360">Proposal Exported in App associated with i360</a> webhook</li>
+<li>Enable subscription to the <a href="#proposal-exported-in-app">Proposal Exported in App</a> webhook</li>
 </ul>
 
 <p>Depending on your integration goals, we offer two levels of integration: the <code>Basic Standard Integration</code> and the <code>Extended Integration</code>.</p>
@@ -1426,7 +1426,7 @@ The returned <code>url</code> will expire in 24 hours. It's not a permanent link
 <li>Associate an I360 Appointment with a specific ArcSite Project through <a href="#associate-i360-appointment-with-arcsite-project">Associate I360 Appointment with ArcSite Project</a>.</li>
 </ul>
 
-<aside class='notice'>Completing the Basic Standard Integration provides you with essential ArcSite I360 integration functionality, including automatic synchronization of Drawing PDF data, proactive transmission of Sales and Sales Item information to I360 Appointments, and updating the Appointment status to "Sold." These features are readily available in ArcSite and do not require additional custom development.</aside>
+<aside class='notice'>Completing the Basic Standard Integration provides you with essential ArcSite I360 integration functionality, including automatic synchronization of Drawing PDF data, pushing Sales and Sales Item information to I360 Appointments, and updating the Appointment status to "Sold." These features are readily available in ArcSite and do not require additional custom development.</aside>
 <h3 id='validating-the-integration'>Validating the Integration</h3>
 <p>Once you&#39;ve successfully created the project and associated with the appointment, you can verify the integration status in ArcSite. Start by confirming if the corresponding ArcSite Project has been successfully created in the Projects list. If you can locate the corresponding project, it indicates a successful integration creation. To further confirm the association, follow these steps:</p>
 
@@ -1444,7 +1444,7 @@ The returned <code>url</code> will expire in 24 hours. It's not a permanent link
 This concludes the validation process for the integration. If you encounter any issues during validation, please review the steps and ensure that the Project was created successfully using the <a href="#create-project">Create Project</a> API.
 </aside>
 <h3 id='connecting-products-between-arcsite-and-i360'>Connecting Products between ArcSite and I360</h3>
-<p>ArcSite supports the connection of one I360 product to an ArcSite product through the web page. Once connected, product information synchronizes with the I360 appointment when pushing drawing line item information to I360.</p>
+<p>ArcSite supports the connection of one I360 product to an ArcSite product through the <a href="https://user.arcsiteapp.com/admin/product_integration">ArcSite Product Manager</a> web page. Once connected, product information synchronizes with the I360 appointment when pushing drawing line item information to I360.</p>
 
 <p>To connect products, follow these steps:</p>
 
@@ -1473,7 +1473,7 @@ This concludes the validation process for the integration. If you encounter any 
 <img src="https://cdn-public.arcsiteapp.com/api_docs_images/export_proposal_png.png" alt="Untitled" />
 Whenever user Drawing information changes and these alterations sync to the cloud, ArcSite initiates an automatic data synchronization task to update the relevant I360 Appointment as necessary.</p></li>
 <li><p><strong>Synchronization Logic</strong>:
-The decision to initiate a push to I360 is based on the configuration in the <strong><code>is_push_drawing</code></strong> and <strong><code>is_push_proposal</code></strong> fields when associating the project. When a push request is made, a task generates the latest Drawing PDF data and exports all PDFs of the user&#39;s Proposal Templates using the latest Drawing data. These files are then automatically pushed to I360, overwriting any existing attachments.</p></li>
+The decision to initiate a push to I360 is based on the configuration in the <strong><code>sync_drawing_pdf</code></strong> and <strong><code>sync_proposal_pdf</code></strong> fields when associating the project. When a push request is made, a task generates the latest Drawing PDF data and exports all PDFs of the user&#39;s Proposal Templates using the latest Drawing data. These files are then automatically pushed to I360, overwriting any existing attachments.</p></li>
 <li><p><strong>Verification of Synchronization Results</strong>:
 Users can locate these files in the Attachments section of the Appointment associated with the Project in I360.</p></li>
 </ul>
@@ -1486,7 +1486,7 @@ Users can locate these files in the Attachments section of the Appointment assoc
 <ul>
 <li>Within the ArcSite app, after a successful Export Customer Proposal, viewing the generated PDF and selecting &quot;Done&quot; in the top left corner triggers a pop-up asking &quot;Did you sell this project?&quot; If the user answers &quot;Yes,&quot; ArcSite initiates an asynchronous task to push the Drawing Line Item data to I360.
 <img src="https://cdn-public.arcsiteapp.com/api_docs_images/did_you_sell_project_png.png" alt="Untitled" /></li>
-<li>On the User Site, users can click &quot;Send to I360&quot; in the Drawing&#39;s Takeoff &amp; Estimate Tab to initiate the Product data push to I360.
+<li>You can also trigger a manual sync on the drawing detail page of the user site by clicking Send to I360 in the Drawing&#39;s Takeoff &amp; Estimate Tab.
 <img src="https://cdn-public.arcsiteapp.com/api_docs_images/user_site_push_items.png" alt="Untitled" /></li>
 </ul></li>
 <li><p><strong>Synchronization Logic</strong>:
@@ -1498,7 +1498,7 @@ Users can find these Sales and Sales Items in the Appointment corresponding to t
 <p>For those requiring advanced features, ArcSite provides Webhooks and APIs tailored for I360 Integration. These tools enable users to develop custom functionalities to enhance their support.</p>
 
 <ul>
-<li>Subscribe to the <a href="#proposal-exported-in-app-associated-with-i360">Proposal Exported in App associated with i360</a> Webhook for custom feature development.</li>
+<li>Subscribe to the <a href="#proposal-exported-in-app">Proposal Exported in App</a> Webhook for custom feature development.</li>
 <li>Utilize the <a href="#connected-i360-product">Connected I360 Product</a> API to access information about I360 Product IDs connected to ArcSite Products.</li>
 </ul>
 <h3 id='example-of-custom-feature-development-using-extended-integration'>Example of Custom Feature Development Using Extended Integration:</h3>
@@ -1507,7 +1507,7 @@ Users can find these Sales and Sales Items in the Appointment corresponding to t
 <p>Implementation Steps:</p>
 
 <ol>
-<li>Ensure the Basic Standard Integration is complete, then subscribe to the <a href="#proposal-exported-in-app-associated-with-i360">Proposal Exported in App associated with i360</a> Webhook on the User Site.</li>
+<li>Ensure the Basic Standard Integration is complete, then subscribe to the <a href="#proposal-exported-in-app">Proposal Exported in App</a> Webhook on the User Site.</li>
 <li>When a user selects &quot;No&quot; in the App, ArcSite pushes relevant Payload information to the registered Webhook URL.</li>
 <li>Extract the Drawing ID and Appointment ID from the Payload.</li>
 <li>Use the Drawing ID to obtain all Line Item information from the Drawing through the <a href="#get-line-items">Drawing Line Items API</a>.</li>
@@ -1536,14 +1536,14 @@ Users can find these Sales and Sales Items in the Appointment corresponding to t
 </ol></li>
 <li><p>Customize the modification of Appointment status and any subsequent functional changes as required.</p></li>
 </ol>
-<h3 id='associate-i360-appointment-with-arcsite-project'>Associate I360 Appointment with ArcSite Project</h3><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST <span class="s1">'https://api.arcsite.com/v1/i360/associate_project/'</span> <span class="se">\</span>
+<h3 id='associate-i360-appointment-with-arcsite-project'>Associate I360 Appointment with ArcSite Project</h3><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST <span class="s1">'https://api.arcsite.com/v1/i360/associate_project'</span> <span class="se">\</span>
 <span class="nt">-H</span> <span class="s1">'Authorization: Bearer **your_api_token_here**'</span> <span class="se">\</span>
 <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{
   "appointment_id": "AXh09668400GJgk",
   "project_id": "36029621653386360",
-  "is_push_drawing": true,
-  "is_push_proposals": true,
+  "sync_drawing_pdf": true,
+  "sync_proposal_pdf": true,
 }'</span>
 </code></pre></div>
 <blockquote>
@@ -1585,7 +1585,7 @@ Users can find these Sales and Sales Items in the Appointment corresponding to t
 </span></code></pre></div>
 <p>This endpoint establishes an association between an I360 appointment and an existing ArcSite project.</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code>POST https://api.arcsite.com/v1/i360/associate_project/</code></p>
+<p><code>POST https://api.arcsite.com/v1/i360/associate_project</code></p>
 <h3 id='parameters'>Parameters</h3>
 <table><thead>
 <tr>
@@ -1605,12 +1605,12 @@ Users can find these Sales and Sales Items in the Appointment corresponding to t
 <td>(required) The ID of the existing ArcSite project.</td>
 </tr>
 <tr>
-<td>is_push_drawing</td>
+<td>sync_drawing_pdf</td>
 <td>Boolean</td>
 <td>(optional) Specifies whether to automatically send Drawing PDF files to the I360 Appointment. Default is true.</td>
 </tr>
 <tr>
-<td>is_push_proposals</td>
+<td>sync_proposal_pdf</td>
 <td>Boolean</td>
 <td>(optional) Specifies whether to automatically send Proposal PDF files to the I360 Appointment. Default is true.</td>
 </tr>
@@ -1623,7 +1623,7 @@ Users can find these Sales and Sales Items in the Appointment corresponding to t
 <p>In ArcSite, after setting up the I360 environment, you can connect an I360 Product to an ArcSite Product within the ArcSite website.</p>
 
 <p>To retrieve the connected I360 Product ID using an ArcSite Product ID, you can utilize this API:</p>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api.arcsite.com/v1/i360/connected_product/&lt;arcsite_product_id&gt;/'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s1">'https://api.arcsite.com/v1/i360/connected_product/&lt;arcsite_product_id&gt;'</span> <span class="se">\</span>
 <span class="nt">-H</span> <span class="s1">'Authorization: Bearer **your_api_token_here**'</span> 
 </code></pre></div>
 <blockquote>
@@ -1635,12 +1635,12 @@ Users can find these Sales and Sales Items in the Appointment corresponding to t
 </span></code></pre></div>
 <p>This endpoint provides the connected I360 product ID.</p>
 <h3 id='http-request-2'>HTTP Request</h3>
-<p><code>POST https://api.arcsite.com/v1/i360/connected_product/&lt;arcsite_product_id&gt;/</code></p>
+<p><code>POST https://api.arcsite.com/v1/i360/connected_product/&lt;arcsite_product_id&gt;</code></p>
 
 <aside class='notice'>
 <code>connected_product_id</code> If a product has not been connected to an I360 Product in ArcSite, it will return <strong>null</strong>
 </aside>
-<h3 id='webhooks-for-i360'>Webhooks for I360</h3><h3 id='proposal-exported-in-app-associated-with-i360'>Proposal Exported in App associated with i360</h3>
+<h3 id='webhooks-for-i360'>Webhooks for I360</h3><h3 id='proposal-exported-in-app'>Proposal Exported in App</h3>
 <p>The <code>proposal.exported.app.i360</code> webhook is triggered when a project associated with an I360 appointment is exported in the ArcSite app, and the user does not mark the project as sold within the app.</p>
 
 <p>This webhook is specifically triggered under the following conditions:</p>
@@ -1659,7 +1659,7 @@ Users can find these Sales and Sales Items in the Appointment corresponding to t
 <span style="color: #FFF">
 This webhook is triggered when the user selects "No" in the app. If the user selects "Yes," the webhook will not be triggered, and ArcSite will automatically push the drawing line items data to I360 using the default logic.
 </span></aside>
-<h3 id='proposal-exported-in-app-associated-with-i360-webhook-payload'>Proposal Exported in App associated with i360 Webhook Payload</h3>
+<h3 id='proposal-exported-in-app-webhook-payload'>Proposal Exported in App Webhook Payload</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
