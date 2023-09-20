@@ -1618,7 +1618,7 @@ Check the Sales and Line Items in the corresponding I360 Appointment to confirm 
 <p><code>POST https://api.arcsite.com/v1/i360/connected_product/&lt;arcsite_product_id&gt;</code></p>
 
 <aside class='notice'>
-<code>connected_product_id</code> If a product has not been connected to an I360 Product in ArcSite, it will return <strong>null</strong>
+<code>connected_product_id</code> If a product has not been connected to an I360 Product in ArcSite, it will return a 400 error.
 </aside>
 <h3 id='webhooks-for-i360'>Webhooks for I360</h3><h3 id='proposal-exported-in-app'>Proposal Exported in App</h3>
 <p>The <code>proposal.exported.app.i360</code> webhook is triggered when a project associated with an I360 appointment is exported in the ArcSite app, and the user does not mark the project as sold within the app.</p>
@@ -1628,7 +1628,7 @@ Check the Sales and Line Items in the corresponding I360 Appointment to confirm 
 <ul>
 <li>The project is associated with an I360 appointment.</li>
 <li>Subscription to this webhook is active on the ArcSite user site.
-<img src="images/i360/sub_webhook_page-35cb2b17.png" alt="Untitled" /></li>
+<img src="images/i360/sub_webhook_page-5e6a0a01.png" alt="Untitled" /></li>
 <li>The project is exported in the ArcSite app, and it is associated with an I360 appointment.
 <img src="images/i360/export_proposal_png-d0f8a2f5.png" alt="Untitled" /></li>
 <li>The user choose the &quot;Yes&quot; or &quot;No&quot; in the app when prompted.
