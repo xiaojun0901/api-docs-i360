@@ -332,7 +332,7 @@
             <a href="#integrations" class="toc-h1 toc-link" data-title="Integrations">Integrations</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#i360-integration" class="toc-h2 toc-link" data-title="I360 Integration">I360 Integration</a>
+                    <a href="#improveit360-integration" class="toc-h2 toc-link" data-title="Improveit360 Integration">Improveit360 Integration</a>
                   </li>
               </ul>
           </li>
@@ -1400,7 +1400,7 @@ The returned <code>url</code> will expire in 24 hours. It's not a permanent link
 <td></td>
 </tr>
 </tbody></table>
-<h1 id='integrations'>Integrations</h1><h2 id='i360-integration'>I360 Integration</h2>
+<h1 id='integrations'>Integrations</h1><h2 id='improveit360-integration'>Improveit360 Integration</h2>
 <p>ArcSite&#39;s I360 Integration extends functionalities to enrich your experience:</p>
 
 <ul>
@@ -1423,6 +1423,9 @@ The returned <code>url</code> will expire in 24 hours. It's not a permanent link
 <li>Use the <strong><a href="#create-project">ArcSite Project Create API</a></strong> to generate an ArcSite Project using information from an I360 Appointment.</li>
 <li>Associate an I360 Appointment with a specific ArcSite Project through <a href="#associate-i360-appointment-with-arcsite-project">Associate I360 Appointment with ArcSite Project</a>.</li>
 </ul>
+
+<aside class='notice'>It is recommended to use the above 2 APIs to complete the basic integration. <strong>We will deprecate the old Create Project API (<code>POST https://user.arcsiteapp.com/extapi/projects/create/</code>)</strong>.
+</aside>
 
 <aside class='notice'>Completing the Basic Standard Integration equips you with key features like auto-syncing Drawing PDFs, updating Sales data in I360 Appointments, and setting Appointment statuses to "<strong>Sold</strong>". No extra custom development is needed; these features come out-of-the-box with ArcSite.
 </aside>
@@ -1501,13 +1504,20 @@ Check the Sales and Line Items in the corresponding I360 Appointment to confirm 
 <li>Use the <a href="#connected-i360-product">Connected I360 Product</a> API to map ArcSite Products to I360 Product IDs.</li>
 </ul>
 <h3 id='custom-feature-example'>Custom Feature Example:</h3>
-<p>Let&#39;s say you&#39;ve edited a Drawing and want to auto-generate Quotes in I360. You also want to manage the I360 Appointment statuses differently.</p>
+<p>Let&#39;s say you&#39;ve edited a Drawing and want to auto-generate Quotes in I360 when you select &quot;No&quot; for selling the project in App. You also want to manage the I360 Appointment statuses differently.</p>
 
 <p><strong>Implementation Steps:</strong></p>
-
+<div class="highlight"><pre class="highlight plaintext"><code> payload = get_payload_from_webhook()
+ if payload.is_sold is False
+     # Generate I360 Quotes
+     # Create I360 Quote Items
+     # Optionally, modify the I360 Appointment status or add other custom features.
+ else
+     # Do nothing, arcsite will sync line items data now.
+</code></pre></div>
 <ol>
 <li>Complete Basic Integration and subscribe to the <a href="#proposal-exported-in-app">Proposal Exported in App</a> Webhook.</li>
-<li>If you select &quot;No&quot; for selling the project, ArcSite sends payload data to your webhook URL.</li>
+<li>ArcSite sends payload data to your webhook URL. You should to extract the <code>is_sold</code> from the payload and <strong>handle the logic like the sample code</strong> right side.</li>
 <li>Extract <code>Drawing ID</code> and <code>Appointment ID</code> from the payload.</li>
 <li><strong>Generate an I360 Quotes</strong>
 
@@ -1528,7 +1538,7 @@ Check the Sales and Line Items in the corresponding I360 Appointment to confirm 
 </ul></li>
 <li>Optionally, modify the I360 Appointment status or add other custom features.</li>
 </ol>
-<h3 id='associate-i360-appointment-with-arcsite-project'>Associate I360 Appointment with ArcSite Project</h3><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST <span class="s1">'https://api.arcsite.com/v1/i360/associate_project'</span> <span class="se">\</span>
+<h3 id='apis-for-i360'>APIs for I360</h3><h3 id='associate-i360-appointment-with-arcsite-project'>Associate I360 Appointment with ArcSite Project</h3><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST <span class="s1">'https://api.arcsite.com/v1/i360/associate_project'</span> <span class="se">\</span>
 <span class="nt">-H</span> <span class="s1">'Authorization: Bearer **your_api_token_here**'</span> <span class="se">\</span>
 <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
 <span class="nt">-d</span> <span class="s1">'{
@@ -1597,9 +1607,9 @@ Check the Sales and Line Items in the corresponding I360 Appointment to confirm 
 </tbody></table>
 
 <aside class='notice'>
-<code>project_id</code> An ArcSite Project can only be associated with one Appointment, and attempting to associate it again if it's already associated will result in a failure.
+An ArcSite Project can only be associated with one Appointment, and attempting to associate it again if it's already associated will result in a failure.
 </aside>
-<h3 id='apis-for-i360'>APIs for I360</h3><h3 id='connected-i360-product'>Connected I360 Product</h3>
+<h3 id='connected-i360-product'>Connected I360 Product</h3>
 <p>In ArcSite, after setting up the I360 environment, you can connect an I360 Product to an ArcSite Product within the ArcSite website.</p>
 
 <p>To retrieve the connected I360 Product ID using an ArcSite Product ID, you can utilize this API:</p>
@@ -1618,17 +1628,17 @@ Check the Sales and Line Items in the corresponding I360 Appointment to confirm 
 <p><code>POST https://api.arcsite.com/v1/i360/connected_product/&lt;arcsite_product_id&gt;</code></p>
 
 <aside class='notice'>
-<code>connected_product_id</code> If a product has not been connected to an I360 Product in ArcSite, it will return a 400 error.
+If a product has not been connected to an I360 Product in ArcSite, it will return a 400 error.
 </aside>
 <h3 id='webhooks-for-i360'>Webhooks for I360</h3><h3 id='proposal-exported-in-app'>Proposal Exported in App</h3>
-<p>The <code>proposal.exported.app.i360</code> webhook is triggered when a project associated with an I360 appointment is exported in the ArcSite app, and the user does not mark the project as sold within the app.</p>
+<p>This webhook is triggered when a project associated with an I360 appointment is exported in the ArcSite app, and the user does not mark the project as sold within the app.</p>
 
 <p>This webhook is specifically triggered under the following conditions:</p>
 
 <ul>
 <li>The project is associated with an I360 appointment.</li>
 <li>Subscription to this webhook is active on the ArcSite user site.
-<img src="images/i360/sub_webhook_page-5e6a0a01.png" alt="Untitled" /></li>
+<img src="images/i360/sub_webhook_page-a8574c09.png" alt="Untitled" /></li>
 <li>The project is exported in the ArcSite app, and it is associated with an I360 appointment.
 <img src="images/i360/export_proposal_png-d0f8a2f5.png" alt="Untitled" /></li>
 <li>The user choose the &quot;Yes&quot; or &quot;No&quot; in the app when prompted.
