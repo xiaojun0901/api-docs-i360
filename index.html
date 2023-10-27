@@ -212,19 +212,21 @@
     <link href="stylesheets/print-0bf43469.css" rel="stylesheet" media="print" />
       <script src="javascripts/all-c15a6b1e.js"></script>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-97995424-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-97995424-1');
-    </script>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-P3GKRQJ');</script>
+    <!-- End Google Tag Manager -->
 
   </head>
 
   <body class="index" data-languages="[]">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P3GKRQJ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -333,6 +335,9 @@
               <ul class="toc-list-h2">
                   <li>
                     <a href="#improveit360-integration" class="toc-h2 toc-link" data-title="Improveit360 Integration">Improveit360 Integration</a>
+                  </li>
+                  <li>
+                    <a href="#zohocrm-integration" class="toc-h2 toc-link" data-title="ZohoCRM Integration">ZohoCRM Integration</a>
                   </li>
               </ul>
           </li>
@@ -1054,6 +1059,113 @@ The pdf could take some time(often less than 1 minute) to generate if the drawin
 <p>Get line items by drawing id.</p>
 <h3 id='http-request-2'>HTTP Request</h3>
 <p><code>GET https://api.arcsite.com/v1/drawings/&lt;id&gt;/line_items</code></p>
+<h3 id='response-schema'>Response Schema</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>line_items</td>
+<td>List[LineItem]</td>
+<td>All product line items</td>
+</tr>
+<tr>
+<td>subtotal</td>
+<td>Number</td>
+<td>The subtotal of all items before discounts and markups</td>
+</tr>
+<tr>
+<td>discount</td>
+<td>Number</td>
+<td>The total amount of discount applied</td>
+</tr>
+<tr>
+<td>discount_description</td>
+<td>String</td>
+<td>Description or reason for the discount</td>
+</tr>
+<tr>
+<td>markup</td>
+<td>Number</td>
+<td>The total amount of markup added</td>
+</tr>
+<tr>
+<td>markup_description</td>
+<td>String</td>
+<td>Description or reason for the markup</td>
+</tr>
+<tr>
+<td>taxes</td>
+<td>List[TaxItem]</td>
+<td>All taxes applied</td>
+</tr>
+</tbody></table>
+<h3 id='lineitem'>LineItem</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>String</td>
+<td>The name of the product</td>
+</tr>
+<tr>
+<td>quantity</td>
+<td>Number</td>
+<td>The quantity of the product</td>
+</tr>
+<tr>
+<td>total</td>
+<td>Number</td>
+<td>Item total after discounts and markup applied</td>
+</tr>
+<tr>
+<td>price</td>
+<td>Number?</td>
+<td>Item total before discounts and markup applied; not provided for custom price items</td>
+</tr>
+<tr>
+<td>sku</td>
+<td>String</td>
+<td>The stock keeping unit of the product; not provided for custom price items</td>
+</tr>
+<tr>
+<td>unit</td>
+<td>String</td>
+<td>The unit of measurement for the product&#39;s quantity; not provided for custom price items</td>
+</tr>
+<tr>
+<td>product_id</td>
+<td>String</td>
+<td>The ID of the product; not provided for custom price items</td>
+</tr>
+</tbody></table>
+<h3 id='taxitem'>TaxItem</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>String</td>
+<td>The name of the tax</td>
+</tr>
+<tr>
+<td>total</td>
+<td>Number</td>
+<td>The total amount of tax</td>
+</tr>
+</tbody></table>
 <h1 id='products'>Products</h1><h2 id='query-products'>Query products</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.arcsite.com/v1/products"</span> <span class="se">\</span>
   <span class="nt">-H</span> <span class="s2">"Authorization: Bearer **your_api_token_here**"</span>
 </code></pre></div>
@@ -1403,7 +1515,7 @@ The returned <code>url</code> will expire in 24 hours. It's not a permanent link
 <h1 id='integrations'>Integrations</h1><h2 id='improveit360-integration'>Improveit360 Integration</h2>
 <p>ArcSite Provides Out-of-the-Box <a href="#basic-standard-integration">Basic Standard Integration</a> for essential features. With Basic Standard Integration, it supports auto-pushing Drawing PDFs, updating Sales data in I360 Appointments, and setting Appointment statuses to &quot;<strong>Sold</strong>&quot;. No extra custom development is needed.</p>
 
-<p>For more tailored solutions, go with <a href="#advanced-features-with-extended-integration">Extended Integration</a> that comes with flexible APIs and Webhooks.</p>
+<p>For more tailored solutions, go with <a href="#customized-features-with-extended-integration">Extended Integration</a> that comes with flexible APIs and Webhooks.</p>
 <h3 id='basic-standard-integration'>Basic Standard Integration</h3>
 <p><strong>Integrating I360 into ArcSite</strong></p>
 
@@ -1618,21 +1730,21 @@ An ArcSite Project can only be associated with one Appointment, and attempting t
 <aside class='notice'>
 If a product has not been connected to an I360 Product in ArcSite, it will return a 400 error.
 </aside>
-<h3 id='webhooks-for-i360'>Webhooks for I360</h3><h3 id='proposal-exported-in-app'>Proposal Exported in App</h3>
-<p>This webhook is triggered when a project associated with an I360 appointment is exported in the ArcSite app, and the user does not mark the project as sold within the app.</p>
+<h3 id='webhooks-for-i360'>Webhooks for I360</h3><h3 id='prompt-after-exporting-proposal-in-app'>Prompt after exporting proposal in App</h3>
+<p>This webhook is triggered after a proposal under the project associated with the i360 appointment is exported in the ArcSite application and the user clicks Yes or No when prompted.</p>
 
 <p>This webhook is specifically triggered under the following conditions:</p>
 
 <ul>
 <li>The project is associated with an I360 appointment.</li>
 <li>Subscription to this webhook is active on the ArcSite user site.
-<img src="images/i360/sub_webhook_page-a8574c09.png" alt="Untitled" /></li>
+<img src="images/i360/sub_webhook_page-eb2be7a6.png" alt="Untitled" /></li>
 <li>The project is exported in the ArcSite app, and it is associated with an I360 appointment.
 <img src="images/i360/export_proposal_png-d0f8a2f5.png" alt="Untitled" /></li>
 <li>The user choose the &quot;Yes&quot; or &quot;No&quot; in the app when prompted.
 <img src="images/i360/did_you_sell_project_png-7d530db7.png" alt="Untitled" /></li>
 </ul>
-<h3 id='proposal-exported-in-app-webhook-payload'>Proposal Exported in App Webhook Payload</h3>
+<h3 id='prompt-after-exporting-proposal-in-app-webhook-payload'>Prompt after exporting proposal in App Webhook Payload</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1656,9 +1768,214 @@ If a product has not been connected to an I360 Product in ArcSite, it will retur
 <td>(required) Associated Appointment ID</td>
 </tr>
 <tr>
-<td>is_sold</td>
+<td>yes_no</td>
 <td>Boolean</td>
-<td>(required) Indicates if the user chose to mark the project as sold in the app.</td>
+<td>(required) User Selection</td>
+</tr>
+</tbody></table>
+<h2 id='zohocrm-integration'>ZohoCRM Integration</h2>
+<p>ArcSite Provides Out-of-the-Box <a href="#zohocrm-basic-standard-integration">Basic Standard Integration</a> for essential features. With Basic Standard Integration, it supports associating ZohoCRM Record with ArcSite project, and pushing proposal PDF from ArcSite to associated record as attachment in ZohoCRM. No extra custom development is needed.</p>
+
+<p>For more tailored solutions, go with <a href="#customized-zohocrm-feature-example">Extended Integration</a> that comes with flexible APIs and Webhooks.</p>
+<h3 id='zohocrm-basic-standard-integration'>ZohoCRM Basic Standard Integration</h3>
+<p><strong>Integrating ZohoCRM into ArcSite</strong></p>
+
+<p>For detailed settings and connection methods, please consult the setup guide: <strong><a href="https://www.notion.so/arcsite/Connecting-to-ZohoCRM-in-ArcSite-6a4ac0dc433d497994bc75a4b2f8982d?pvs=4">Connecting ZohoCRM in ArcSite</a></strong>.</p>
+
+<p><strong>Associating ZohoCRM Records with ArcSite Projects</strong></p>
+
+<ul>
+<li>Use the <strong><a href="#create-project">ArcSite Project Create API</a></strong> to generate an ArcSite Project using information from a ZohoCRM record.</li>
+<li>Associate a ZohoCRM record with a specific ArcSite Project through <a href="#associate-zoho-crm-record-with-arcsite-project">Associate ZohoCRM record with ArcSite Project</a>.</li>
+</ul>
+<h3 id='validating-the-integration-2'>Validating the Integration</h3>
+<p>Once you&#39;ve successfully created the project and associated with the ZohoCRM record, you can verify the integration status in ArcSite follow these steps:</p>
+
+<ol>
+<li>Check if the Project created via the API appears in the Project List. If it&#39;s missing, this indicates a project creation failure.
+<img src="images/i360/project_list_png-4109a943.png" alt="Untitled" /></li>
+<li>Within the ArcSite app, create a Drawing within the Project and upload it to the Cloud.</li>
+<li>On the ArcSite user site, select the uploaded Drawing.</li>
+<li>In the Takeoff &amp; Estimate Tab, ensure the <strong>Send to ZohoCRM</strong> button is visible.
+<img src="images/zoho_crm/send_to_zoho_crm_png-660ebda5.png" alt="Untitled" /></li>
+<li>If the <strong>Send to ZohoCRM</strong> button appears, it confirms the successful association, allowing the Project to push proposal PDF as attachment to associated ZohoCRM record. If the button is missing, this indicates a project association failure. Please check the <a href="#associate-zoho-crm-record-with-arcsite-project">associate API</a> for more information.</li>
+</ol>
+<h3 id='data-pushing-details-2'>Data Pushing Details</h3><h3 id='push-for-proposal-pdf'>Push for Proposal PDF</h3>
+<ul>
+<li><p><strong>When to Push</strong>:
+<img src="images/zoho_crm/zoho-crm-popup-424cfaaa.jpeg" alt="Did You Sell?" />
+When user clicks the exports the custom proposal in the app, we will trigger out push to ZohoCRM.</p></li>
+<li><p><strong>How It Works</strong>:
+After exported proposal PDF is generated and click &quot;Yes&quot; in the popup to push the PDF to ZohoCRM. Once push will create a new attachment in the ZohoCRM record.</p></li>
+<li><p><strong>How to Verify</strong>:
+Check these files in the Attachments section of the associated ZohoCRM Record.</p></li>
+</ul>
+<h3 id='customized-features-with-extended-integration-2'>Customized Features with Extended Integration</h3>
+<p>If you need more customized features, ArcSite&#39;s Extended Integration offers specialized Webhooks for ZohoCRM.</p>
+
+<ul>
+<li>Subscribe to <a href="#proposal-exported-in-app">Proposal Exported in App</a> for custom developments.</li>
+</ul>
+<h3 id='customized-zohocrm-feature-example'>Customized ZohoCRM Feature Example:</h3>
+<p>Let&#39;s say you&#39;ve edited a Drawing and want to push the drawing line items to ZohoCRM to create a Quotes when you select &quot;Yes&quot; or &quot;No&quot; in pop-up.</p>
+
+<p><strong>Implementation Steps:</strong></p>
+<div class="highlight"><pre class="highlight plaintext"><code>  payload = get_payload_from_webhook()
+  # extract drawing_id, zoho_module_name and zoho_record_id from payload
+  drawing_id = payload.drawing_id
+  zoho_module_name = payload.zoho_module_name
+  zoho_record_id = payload.zoho_record_id
+  if payload.yes_no is False
+     # Do nothing or other logic
+  else
+     # Fetch all Line Items info using drawing_id
+     ine_items = request_arcsite_drawing_line_items_api(drawing_id)
+     # Create ZohoCRM Quotes or other record with the line items data
+</code></pre></div>
+<ol>
+<li>Complete Basic Integration and subscribe to the <a href="#proposal-exported-in-app">Proposal Exported in App</a> Webhook.</li>
+<li>ArcSite sends payload data to your webhook URL. You should to extract the <code>yes_no</code> from the payload and <strong>handle the logic like the sample code</strong> right side.</li>
+<li>Extract <code>Drawing ID</code> and <code>zoho_module</code> and <code>zoho_record_id</code> from the payload.</li>
+<li>Fetch all Line items info using the <code>drawing_id</code> via <a href="#get-line-items">Drawing Line Items API</a>.</li>
+<li><p>Create Quotes with Drawing Line Items Data</p>
+
+<ul>
+<li>Deal_Name: Use the <code>zoho_module</code> and <code>zoho_record_id</code> to fetch the Deals record name from ZohoCRM.</li>
+<li>Discount: Use the sum of <code>discount</code> and <code>markup</code> from the drawing line items data.</li>
+<li>Tax: Use line items sum of<code>tax</code> as the <code>Tax</code> of Quotes.</li>
+<li>Quoted_Items: Use the line items data to create the <code>Quoted_Items</code> of Quotes
+
+<ul>
+<li>Product_Name: Use the <code>name</code> of the line item, you can use the <code>name</code> to fetch the product from ZohoCRM.</li>
+<li>Quantity: Use the <code>quantity</code> of line item</li>
+<li>Price_Book_Name: Use the <code>zoho_product_id</code> fetched before to get or create PriceBook data from ZohoCRM.</li>
+</ul></li>
+</ul></li>
+<li><p>Optionally, modify the Record status or add other custom features.</p></li>
+</ol>
+<h3 id='apis-for-zohocrm'>APIs for ZohoCRM</h3><h3 id='associate-zoho-crm-record-with-arcsite-project'>Associate Zoho CRM Record with ArcSite Project</h3><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST <span class="s1">'https://api.arcsite.com/v1/zoho_crm/associate_project'</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s1">'Authorization: Bearer **your_api_token_here**'</span> <span class="se">\</span>
+<span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+<span class="nt">-d</span> <span class="s1">'{
+  "zoho_module": "Deals",
+  "zoho_record_id": "598254512451545",
+  "project_id": "36029621653386360"
+}'</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"36029621653386360"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nac"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-01-16T03:31:39"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-01-16T03:31:39"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"job_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"heeloo"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"customer"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"122112"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"second_phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"122112"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dev@arctuition.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"second_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dev@arctuition.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"street"</span><span class="p">:</span><span class="w"> </span><span class="s2">"address"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"city"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"county"</span><span class="p">:</span><span class="w"> </span><span class="s2">"county"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"state"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"zip_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200544"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"work_site_address"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"street"</span><span class="p">:</span><span class="w"> </span><span class="s2">"street"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"city"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"county"</span><span class="p">:</span><span class="w"> </span><span class="s2">"county"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"state"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"zip_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"300433"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"sales_rep"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Wang"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dev@arctuition.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"122112"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint establishes an association between a ZohoCRM record and an existing ArcSite project.</p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><code>POST https://api.arcsite.com/v1/zoho_crm/associate_project</code></p>
+<h3 id='parameters-2'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>zoho_module</td>
+<td>String</td>
+<td>(required) The Name of the Record in ZohoCRM, the value should one of Deals, Quotes and Leads.</td>
+</tr>
+<tr>
+<td>zoho_record_id</td>
+<td>String</td>
+<td>(required) The ID of the record in ZohoCRM.</td>
+</tr>
+<tr>
+<td>project_id</td>
+<td>Int</td>
+<td>(required) The ID of the existing ArcSite project.</td>
+</tr>
+</tbody></table>
+
+<aside class='notice'>
+An ArcSite Project can only be associated with one ZohoCRM record, and attempting to associate it again if it's already associated will result in a failure.
+</aside>
+<h3 id='webhooks-for-zohocrm'>Webhooks for ZohoCRM</h3><h3 id='prompt-after-exporting-proposal-in-app-2'>Prompt after exporting proposal in App</h3>
+<p>This webhook is triggered after a proposal under the project associated with the ZohoCRM record is exported in the ArcSite application and the user clicks Yes or No when prompted.</p>
+
+<p>This webhook is specifically triggered under the following conditions:</p>
+
+<ul>
+<li>The project is associated with a ZohoCRM record.</li>
+<li>Subscription to this webhook is active on the ArcSite user site.
+<img src="images/i360/sub_webhook_page-eb2be7a6.png" alt="Untitled" /></li>
+<li>The project is exported in the ArcSite app, and it is associated with a ZohoCRM record.
+<img src="images/i360/export_proposal_png-d0f8a2f5.png" alt="Untitled" /></li>
+<li>The user choose the &quot;Yes&quot; or &quot;No&quot; in the app when prompted.
+<img src="images/zoho_crm/zoho-crm-popup-424cfaaa.jpeg" alt="Untitled" /></li>
+</ul>
+<h3 id='prompt-after-exporting-proposal-in-app-webhook-payload-2'>Prompt after exporting proposal in App Webhook Payload</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>project_id</td>
+<td>String</td>
+<td>(required) The project id of the project</td>
+</tr>
+<tr>
+<td>drawing_id</td>
+<td>String</td>
+<td>(required) The drawing of the project</td>
+</tr>
+<tr>
+<td>zoho_module</td>
+<td>String</td>
+<td>(required) The name of the ZohoCRM module, the value should one of Deals, Quotes and Leads.</td>
+</tr>
+<tr>
+<td>zoho_record_id</td>
+<td>Boolean</td>
+<td>(required) The record ID in ZohoCRM</td>
+</tr>
+<tr>
+<td>yes_no</td>
+<td>Boolean</td>
+<td>(required) User Selection</td>
 </tr>
 </tbody></table>
 
